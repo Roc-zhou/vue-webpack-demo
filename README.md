@@ -1,5 +1,5 @@
 # 使用webpack4手动撸一个vue工程，不使用vue-cli
-> 项目地址：https://github.com/Roc-zhou/vue-webpack-demo.git
+> 项目地址：[https://github.com/Roc-zhou/vue-webpack-demo.git](https://github.com/Roc-zhou/vue-webpack-demo.git)
 
 ### 初始化项目
 ```sh
@@ -30,7 +30,7 @@ touch webpack.config.js
 </html>
 ```
 ### 搭建项目框架 创建目录 主入口文件等
-```
+```sh
 src 目录下
 
 |-- App.vue
@@ -46,7 +46,7 @@ src 目录下
     `-- index.js
 ```
 ### App.vue 文件内容 
-```
+```js
 <template>
 <div id="app">
     <router-view/>
@@ -75,8 +75,8 @@ new Vue({
   render: h => h(App)
 }).$mount("#app")
 ```
-### HelloWorld.js 文件
-```
+### HelloWorld.vue 文件
+```js
 <template>
   <div class='helloworld'>
     你好 VUE
@@ -99,7 +99,7 @@ export default {
 </style>
 ```
 ### ./router/index.js 文件
-```
+```js
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -134,7 +134,7 @@ npm i vue-loader vue-template-compiler -D
 npm i css-loader style-loader -D
 ```
 ### 修改 webpack.config.js 文件
-```
+```js
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
