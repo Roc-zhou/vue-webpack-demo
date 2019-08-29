@@ -4,7 +4,7 @@
   "description": "不使用vue-cli，手动配制webpack实现vue开发",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --info=true --progress --color"
   },
   "repository": {
     "type": "git",
