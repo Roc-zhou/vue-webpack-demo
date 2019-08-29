@@ -184,6 +184,13 @@ module.exports = {
   },
 }
 ```
+### 修改package.json文件
+```json
+"scripts": {
+  "build": "webpack",
+  "dev": "webpack-dev-server --info=true --progress --color"
+}
+```
 执行 `npm run dev` 启动后 浏览器地址栏输入 localhost:8080 就会看到 你好 VUE！！
 
 到这我们使用webpack4 简单配制 vue项目算是初步完成！
