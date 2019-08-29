@@ -1,5 +1,6 @@
 # 使用webpack4手动撸一个vue工程，不使用vue-cli
 > 项目地址：[https://github.com/Roc-zhou/vue-webpack-demo.git](https://github.com/Roc-zhou/vue-webpack-demo.git)
+> 个人博客：[https://www.zhouhaipeng.com/](https://www.zhouhaipeng.com/)
 
 ### 初始化项目
 ```sh
