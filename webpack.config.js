@@ -3,9 +3,10 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
+const NODE_ENV = process.env.NODE_ENV
 
 module.exports = {
-  mode: 'development',  // production Or development 环境
+  mode: NODE_ENV,  // production Or development 环境
   entry: "./src/main.js", // 入口文件
   output: {
     path: path.resolve(__dirname, "dist"), // 必须是绝对路径
@@ -34,6 +35,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           'css-loader'
         ]
       },
