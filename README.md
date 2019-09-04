@@ -12,7 +12,7 @@ npm init -y
 ### 安装webpack webpack-cli
 [webpack](https://www.webpackjs.com/guides/) 官方安装文档
 ```sh
-npm install --save-dev webpack webpack-cli  // 使用的是webpack4.x
+npm install --save-dev webpack webpack-cli  // 使用的是webpack4.39.3
 ```
 ### 新建 webpack.config.js webpack配制文件
 ```sh
