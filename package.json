@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Roc-zhou/vue-webpack-demo.git"
   },
-  "keywords": [],
+  "keywords": ["vue","vue-webpack","webpack-demo"],
   "author": "",
   "license": "ISC",
   "bugs": {

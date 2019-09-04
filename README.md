@@ -1,6 +1,9 @@
 # 使用webpack4手动撸一个vue工程，不使用vue-cli
 > 项目地址：[https://github.com/Roc-zhou/vue-webpack-demo.git](https://github.com/Roc-zhou/vue-webpack-demo.git)
+
 > 个人博客：[https://www.zhouhaipeng.com/](https://www.zhouhaipeng.com/)
+
+> 图片云：[https://sm.ms/](https://sm.ms/)
 
 ### 初始化项目
 ```sh
@@ -172,6 +175,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           'css-loader'
         ]
       },
@@ -194,4 +198,38 @@ module.exports = {
 执行 `npm run dev` 启动后 浏览器地址栏输入 localhost:8080 就会看到 你好 VUE！！
 
 到这我们使用webpack4 简单配制 vue项目算是初步完成！
-接下来我们在 进行更优化的配制...
+
+### 修改启动配制
+```sh
+安装 cross-env
+npm install -D cross-env or yarn add cross-env --dev
+```
+### 修改package.json
+```sh
+"scripts": {
+  "build": "cross-env NODE_ENV=production webpack",
+  "dev": "cross-env NODE_ENV=development webpack-dev-server --info=true --color"
+}
+```
+![image.png](https://i.loli.net/2019/09/03/JXWUc1d3oeKHPna.png)
+### 配制webpack.config.js
+```js
+const NODE_ENV = process.env.NODE_ENV  // production or development
+// 修改 mode
+mode: NODE_ENV
+```
+![image.png](https://i.loli.net/2019/09/03/maH7OgXQdyKvZVP.png)
+### 配制map文件是否生成
+```sh
+添加
+const sourceMap = true
+// module.exports 中添加
+devtool: NODE_ENV === 'production' ? sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
+```
+![image.png](https://i.loli.net/2019/09/03/mxSN9H7facZPzDI.png)
+> 注意 不能同时使用 devtool 选项和 SourceMapDevToolPlugin/EvalSourceMapDevToolPlugin 插件。[devtool](https://webpack.docschina.org/configuration/devtool/#devtool)
+
+
+现在 一个简单的 vue 项目生成了 vue + webpack4.x
+执行 npm run dev
+

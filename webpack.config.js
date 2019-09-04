@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const NODE_ENV = process.env.NODE_ENV
+const sourceMap = true
 
 module.exports = {
   mode: NODE_ENV,  // production Or development 环境
@@ -46,4 +47,5 @@ module.exports = {
       }
     ]
   },
+  devtool: NODE_ENV === 'production' ? sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
 }
