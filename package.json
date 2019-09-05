@@ -4,13 +4,17 @@
   "description": "不使用vue-cli，手动配制webpack实现vue开发",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --info=true --color"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --info=false --color"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Roc-zhou/vue-webpack-demo.git"
   },
-  "keywords": ["vue","vue-webpack","webpack-demo"],
+  "keywords": [
+    "vue",
+    "vue-webpack",
+    "webpack-demo"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -20,7 +24,9 @@
   "devDependencies": {
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "portfinder": "^1.0.23",
     "style-loader": "^1.0.0",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",

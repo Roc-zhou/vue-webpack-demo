@@ -2,9 +2,16 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const portfinder = require('portfinder')
 
 const NODE_ENV = process.env.NODE_ENV
-const sourceMap = true
+const devObj = {
+  port: 8080,
+  sourceMap: true,
+  host: 'localhost'
+}
+
 
 module.exports = {
   mode: NODE_ENV,  // production Or development 环境
@@ -16,9 +23,11 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true, // 压缩
-    port: 8080,
+    port: devObj.port,
     hot: true, // 热加载
     open: false, //自定打开默认浏览器
+    host: devObj.host,
+    quiet: true
   },
   plugins: [ // 插件
     new HtmlWebpackPlugin({
@@ -47,5 +56,13 @@ module.exports = {
       }
     ]
   },
-  devtool: NODE_ENV === 'production' ? sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
+  devtool: NODE_ENV === 'production' ? devObj.sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
+}
+
+if (NODE_ENV === 'development') {
+  module.exports.plugins.push(new FriendlyErrorsPlugin({
+    compilationSuccessInfo: {
+      messages: [`运行在: http://${devObj.host}:${devObj.port}`],
+    }
+  }))
 }
