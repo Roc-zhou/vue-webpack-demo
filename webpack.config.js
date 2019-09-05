@@ -5,13 +5,22 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 const NODE_ENV = process.env.NODE_ENV
 const devObj = {
   port: 8080,
   sourceMap: true,
-  host: 'localhost'
+  host: '0.0.0.0',
+  assetsRoot: path.resolve(__dirname, '../dist'),
+  assetsSubDirectory: 'sys.public',
+  assetsPublicPath: '/', // 图片相对路径
 }
-
+const assetsPath = function (_path) {
+  const assetsSubDirectory = devObj.assetsSubDirectory
+  return path.posix.join(assetsSubDirectory, _path)
+}
 
 module.exports = {
   mode: NODE_ENV,  // production Or development 环境
@@ -21,13 +30,17 @@ module.exports = {
     filename: "js/[name].[hash].js", // 「入口分块(entry chunk)」的文件名模板（出口分块？）
   },
   devServer: {
+    disableHostCheck: true,
+    compress: true,
     contentBase: path.join(__dirname, "dist"),
     compress: true, // 压缩
     port: devObj.port,
     hot: true, // 热加载
     open: false, //自定打开默认浏览器
     host: devObj.host,
-    quiet: true
+    quiet: true,
+    overlay: { warnings: false, errors: true },
+    clientLogLevel: 'warning'
   },
   plugins: [ // 插件
     new HtmlWebpackPlugin({
@@ -38,6 +51,11 @@ module.exports = {
     }),
     new VueLoaderPlugin()
   ],
+  resolve: {
+    alias: {
+      '@': resolve('src/components'), // 解析  src/components  => @
+    }
+  },
   module: {
     rules: [
       // 它会应用到普通的 `.css` 文件
@@ -53,6 +71,37 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: path.resolve(__dirname, 'node_modules') // 排除文件
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: [
+          resolve('src'),
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: assetsPath('img/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: assetsPath('media/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: assetsPath('fonts/[name].[hash:7].[ext]')
+        }
       }
     ]
   },
@@ -64,5 +113,6 @@ if (NODE_ENV === 'development') {
     compilationSuccessInfo: {
       messages: [`运行在: http://${devObj.host}:${devObj.port}`],
     }
+    // 错误提示 可配置桌面警告
   }))
 }

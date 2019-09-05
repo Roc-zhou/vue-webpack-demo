@@ -231,5 +231,24 @@ devtool: NODE_ENV === 'production' ? sourceMap ? '#source-map' : '' : '#eval-sou
 
 
 现在 一个简单的 vue 项目生成了 vue + webpack4.x
-执行 npm run dev
 
+修改 启动配制
+```js
+npm install -D friendly-errors-webpack-plugin
+
+// webpack.config.js
+if (NODE_ENV === 'development') {
+  module.exports.plugins.push(new FriendlyErrorsPlugin({
+    compilationSuccessInfo: {
+      messages: [`运行在: http://${devObj.host}:${devObj.port}`],
+    }
+  }))
+}
+
+// package.json
+"scripts": {
+  "build": "cross-env NODE_ENV=production webpack",
+  "dev": "cross-env NODE_ENV=development webpack-dev-server --info=false --color"  // 修改
+},
+```
+> 具体修改 请看webpack.config.js 文件，文档可能更新不及时。
