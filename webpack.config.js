@@ -29,6 +29,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "/docs"), // 必须是绝对路径
     filename: "js/[name].[hash].js", // 「入口分块(entry chunk)」的文件名模板（出口分块？）
+    publicPath: '/vue-webpack-demo/'
   },
   devServer: {
     disableHostCheck: false,
