@@ -5,6 +5,8 @@
 
 > 图片云：[https://sm.ms/](https://sm.ms/)
 
+> [DEMO](https://roc-zhou.github.io/vue-webpack-demo/)
+
 ### 初始化项目
 ```sh
 npm init -y
