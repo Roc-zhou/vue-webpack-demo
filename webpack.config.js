@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
@@ -14,7 +15,7 @@ const devObj = {
   sourceMap: true,
   host: '0.0.0.0',
   assetsRoot: path.resolve(__dirname, '../dist'),
-  assetsSubDirectory: 'sys.public',
+  assetsSubDirectory: 'public',
   assetsPublicPath: '/', // 图片相对路径
 }
 const assetsPath = function (_path) {
@@ -26,13 +27,13 @@ module.exports = {
   mode: NODE_ENV,  // production Or development 环境
   entry: "./src/main.js", // 入口文件
   output: {
-    path: path.resolve(__dirname, "dist"), // 必须是绝对路径
+    path: path.resolve(__dirname, "docs"), // 必须是绝对路径
     filename: "js/[name].[hash].js", // 「入口分块(entry chunk)」的文件名模板（出口分块？）
   },
   devServer: {
-    disableHostCheck: true,
-    compress: true,
+    disableHostCheck: false,
     contentBase: path.join(__dirname, "dist"),
+    publicPath: devObj.assetsPublicPath,
     compress: true, // 压缩
     port: devObj.port,
     hot: true, // 热加载
@@ -40,7 +41,12 @@ module.exports = {
     host: devObj.host,
     quiet: true,
     overlay: { warnings: false, errors: true },
-    clientLogLevel: 'warning'
+    clientLogLevel: 'warning',
+    historyApiFallback: {
+      rewrites: [
+        { from: /.*/, to: path.posix.join(devObj.assetsPublicPath, 'index.html') },
+      ],
+    },
   },
   plugins: [ // 插件
     new HtmlWebpackPlugin({
@@ -48,12 +54,14 @@ module.exports = {
       template: './index.html',
       minify: true, //压缩
       hash: false, //添加hash清除缓存
+      inject: true
     }),
     new VueLoaderPlugin()
   ],
   resolve: {
     alias: {
-      '@': resolve('src/components'), // 解析  src/components  => @
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.join(__dirname, '/src/components'), // 解析  src/components  => @
     }
   },
   module: {
@@ -63,6 +71,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          'vue-style-loader',
           'style-loader',
           'css-loader'
         ]
@@ -70,7 +79,15 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        exclude: path.resolve(__dirname, 'node_modules') // 排除文件
+        exclude: path.resolve(__dirname, 'node_modules'), // 排除文件
+        options: {
+          transformToRequire: {
+            video: ['src', 'poster'],
+            source: 'src',
+            img: 'src',
+            image: 'xlink:href'
+          }
+        }
       },
       {
         test: /\.js$/,
@@ -115,4 +132,7 @@ if (NODE_ENV === 'development') {
     }
     // 错误提示 可配置桌面警告
   }))
+  module.exports.devServer.proxy = {
+
+  }
 }

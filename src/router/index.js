@@ -7,8 +7,18 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: () => import('../components/HelloWorld.vue'),
+      name: 'Home',
+      component: () => import('@/Home.vue'),
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('@/about.vue'),
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: () => import('@/help.vue'),
     }
   ],
 })

@@ -252,3 +252,20 @@ if (NODE_ENV === 'development') {
 },
 ```
 > 具体修改 请看webpack.config.js 文件，文档可能更新不及时。
+
+后续配置中记录一次错误
+
+> 当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html。devServer.historyApiFallback 默认禁用
+
+![image.png](https://i.loli.net/2019/09/06/tNFBnvVrCUZ3ujJ.png)
+
+出现此错误的原因是没有配置 `historyApiFallback` 路径重写
+```js
+devserver中添加
+
+historyApiFallback: {
+  rewrites: [
+    { from: /.*/, to: path.posix.join(devObj.assetsPublicPath, 'index.html') },
+  ],
+},
+```
