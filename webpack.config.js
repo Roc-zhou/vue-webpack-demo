@@ -14,7 +14,7 @@ const devObj = {
   port: 8080,
   sourceMap: true,
   host: '0.0.0.0',
-  assetsRoot: path.resolve(__dirname, '../dist'),
+  assetsRoot: path.resolve(__dirname, '/dist'),
   assetsSubDirectory: 'public',
   assetsPublicPath: './', // 图片相对路径
 }
@@ -27,12 +27,12 @@ module.exports = {
   mode: NODE_ENV,  // production Or development 环境
   entry: "./src/main.js", // 入口文件
   output: {
-    path: path.resolve(__dirname, "docs"), // 必须是绝对路径
+    path: path.resolve(__dirname, "/docs"), // 必须是绝对路径
     filename: "js/[name].[hash].js", // 「入口分块(entry chunk)」的文件名模板（出口分块？）
   },
   devServer: {
     disableHostCheck: false,
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, "/dist"),
     publicPath: devObj.assetsPublicPath,
     compress: true, // 压缩
     port: devObj.port,
@@ -71,7 +71,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
           'style-loader',
           'css-loader'
         ]
