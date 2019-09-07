@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
@@ -11,7 +10,7 @@ function resolve(dir) {
 }
 const NODE_ENV = process.env.NODE_ENV
 const devObj = {
-  port: 8080,
+  port: 8087,
   sourceMap: true,
   host: '0.0.0.0',
   assetsRoot: path.resolve(__dirname, '/dist'),
@@ -23,17 +22,16 @@ const assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
-module.exports = {
+const config = {
   mode: NODE_ENV,  // production Or development 环境
   entry: "./src/main.js", // 入口文件
   output: {
-    path: path.resolve(__dirname, "/docs"), // 必须是绝对路径
+    path: path.resolve(__dirname, "docs"), // 必须是绝对路径
     filename: "js/[name].[hash].js", // 「入口分块(entry chunk)」的文件名模板（出口分块？）
-    publicPath: '/'
   },
   devServer: {
     disableHostCheck: false,
-    contentBase: path.join(__dirname, "/dist"),
+    contentBase: path.join(__dirname, "dist"),
     publicPath: devObj.assetsPublicPath,
     compress: true, // 压缩
     port: devObj.port,
@@ -54,12 +52,13 @@ module.exports = {
       filename: 'index.html',
       template: './index.html',
       minify: true, //压缩
-      hash: false, //添加hash清除缓存
+      hash: true, //添加hash清除缓存
       inject: true
     }),
     new VueLoaderPlugin()
   ],
   resolve: {
+    extensions: ['.js', '.vue', '.json'], // 自动添加文件后缀
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.join(__dirname, '/src/components'), // 解析  src/components  => @
@@ -125,14 +124,21 @@ module.exports = {
   devtool: NODE_ENV === 'production' ? devObj.sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
 }
 
-if (NODE_ENV === 'development') {
-  module.exports.plugins.push(new FriendlyErrorsPlugin({
-    compilationSuccessInfo: {
-      messages: [`运行在: http://${devObj.host}:${devObj.port}`],
+module.exports = new Promise((resolve, reject) => {
+  // 配置可用端口
+  portfinder.basePort = devObj.port
+  portfinder.getPort((err, port) => {
+    if (err) {
+      reject(err)
+    } else {
+      process.env.PORT = port
+      config.devServer.port = port
+      config.plugins.push(new FriendlyErrorsPlugin({
+        compilationSuccessInfo: {
+          messages: [`项目运行在: http://${config.devServer.host}:${port}`],
+        }
+      }))
+      resolve(config)
     }
-    // 错误提示 可配置桌面警告
-  }))
-  module.exports.devServer.proxy = {
-
-  }
-}
+  })
+})
