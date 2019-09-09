@@ -5,20 +5,24 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
+    /* {
+      path: '/',
+      redirect: '/home'
+    }, */
     {
       path: '/',
       name: 'Home',
-      component: () => import('@/Home.vue'),
+      component: () => import('@/Home'),
     },
     {
       path: '/about',
       name: 'about',
-      component: () => import('@/about.vue'),
+      component: () => import('@/About'),
     },
     {
       path: '/help',
       name: 'help',
-      component: () => import('@/help.vue'),
+      component: () => import('@/Help'),
     }
   ],
 })
