@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{26:function(e,t,s){"use strict";s.r(t);var a={beforeRouteEnter:(e,t,s)=>s(e=>{}),name:"help",data:()=>({})},n=s(1),i=Object(n.a)(a,function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"help"},[t("Header",{attrs:{showName:"help"}}),this._v(" "),t("h1",[this._v("This is help")])],1)},[],!1,null,"04e334b7",null);t.default=i.exports}}]);
+//# sourceMappingURL=2.57ee76a76d2e873bfbd5.js.map
