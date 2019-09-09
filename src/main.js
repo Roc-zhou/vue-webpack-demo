@@ -6,6 +6,8 @@ import 'rz-ui'
 import RZ from './templete'
 Vue.use(RZ)
 
+import './assets/public/css/main.css'
+
 /* eslint-disable no-new */
 new Vue({
   router,

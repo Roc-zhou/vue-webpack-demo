@@ -12,7 +12,6 @@ export default {
 
 <style scoped>
 #app {
-  width: 1200px;
-  margin: 0 auto;
+  width: 1120px;
 }
 </style>

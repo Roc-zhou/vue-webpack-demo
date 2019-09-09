@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <Header :showName="'about'"></Header>
-    <h1>this is about</h1>
+    <h1>This is about</h1>
   </div>
 </template>
 
