@@ -123,6 +123,12 @@ const config = {
   },
   devtool: NODE_ENV === 'production' ? devObj.sourceMap ? '#source-map' : '' : '#eval-source-map', // 线上环境可以选择不生成map 文件
 }
+if (NODE_ENV === 'development') {
+  config.devServer.proxy = { // proxy URLs to backend development server
+    "/api": "http://localhost:3000"
+  }
+}
+
 
 module.exports = new Promise((resolve, reject) => {
   // 配置可用端口
