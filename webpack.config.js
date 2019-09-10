@@ -4,19 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const devObj = require('./build')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 const NODE_ENV = process.env.NODE_ENV
-const devObj = {
-  port: 8087,
-  sourceMap: true,
-  host: '0.0.0.0',
-  assetsRoot: path.resolve(__dirname, '/dist'),
-  assetsSubDirectory: 'public',
-  assetsPublicPath: '/', // 图片相对路径
-}
+
 const assetsPath = function (_path) {
   const assetsSubDirectory = devObj.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
